@@ -22,8 +22,8 @@ public class GamePanel extends JPanel implements ActionListener {
     static final int GAME_UNITS = (SCREEN_WIDTH*SCREEN_HEIGHT)/(UNIT_SIZE*UNIT_SIZE);
     static final int DELAY = 75;
 
-    final int x[] = new int[GAME_UNITS];    // x-coordinates of the snake body, x[0] is head
-    final int y[] = new int[GAME_UNITS];    // y-coordinates of the snake body, y[0] is head
+    final int[] x = new int[GAME_UNITS];    // x-coordinates of the snake body, x[0] is head
+    final int[] y = new int[GAME_UNITS];    // y-coordinates of the snake body, y[0] is head
     int bodyLength = 6;
     int applesEaten = 0;
     int appleX;
@@ -108,8 +108,8 @@ public class GamePanel extends JPanel implements ActionListener {
     }
 
     public void spawnApple() {
-        appleX = random.nextInt((int)(SCREEN_WIDTH/UNIT_SIZE))*UNIT_SIZE;
-        appleY = random.nextInt((int)(SCREEN_HEIGHT/UNIT_SIZE))*UNIT_SIZE;
+        appleX = random.nextInt(SCREEN_WIDTH/UNIT_SIZE)*UNIT_SIZE;
+        appleY = random.nextInt(SCREEN_HEIGHT/UNIT_SIZE)*UNIT_SIZE;
     }
 
     public void move() {
@@ -137,8 +137,9 @@ public class GamePanel extends JPanel implements ActionListener {
     public void checkCollisions() {
         // check if head collides with body
         for(int i=bodyLength; i>0; i--) {
-            if((x[0] == x[i]) && (y[0] == y[i])) {
+            if ((x[0] == x[i]) && (y[0] == y[i])) {
                 isRunning = false;
+                break;
             }
         }
 
