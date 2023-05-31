@@ -16,22 +16,22 @@ public class GamePanel extends JPanel implements ActionListener {
         DOWN
     }
 
-    static final int SCREEN_WIDTH = 600;
-    static final int SCREEN_HEIGHT = 600;
-    static final int UNIT_SIZE = 25;
-    static final int GAME_UNITS = (SCREEN_WIDTH*SCREEN_HEIGHT)/(UNIT_SIZE*UNIT_SIZE);
-    static final int DELAY = 75;
+    private static final int SCREEN_WIDTH = 600;
+    private static final int SCREEN_HEIGHT = 600;
+    private static final int UNIT_SIZE = 25;
+    private static final int GAME_UNITS = (SCREEN_WIDTH*SCREEN_HEIGHT)/(UNIT_SIZE*UNIT_SIZE);
+    private static final int DELAY = 75;
 
-    final int[] x = new int[GAME_UNITS];    // x-coordinates of the snake body, x[0] is head
-    final int[] y = new int[GAME_UNITS];    // y-coordinates of the snake body, y[0] is head
-    int bodyLength = 6;
-    int applesEaten = 0;
-    int appleX;
-    int appleY;
-    Direction direction = Direction.RIGHT;
-    boolean isRunning = false;
-    Timer timer;
-    Random random;
+    private final int[] x = new int[GAME_UNITS];    // x-coordinates of the snake body, x[0] is head
+    private final int[] y = new int[GAME_UNITS];    // y-coordinates of the snake body, y[0] is head
+    private int bodyLength = 6;
+    private int applesEaten = 0;
+    private int appleX;
+    private int appleY;
+    private Direction direction = Direction.RIGHT;
+    private boolean isRunning = false;
+    private Timer timer;
+    private final Random random;
 
     GamePanel() {
         random = new Random();
@@ -42,11 +42,17 @@ public class GamePanel extends JPanel implements ActionListener {
         startGame();
     }
 
-    public void startGame() {
+    private void startGame() {
         spawnApple();
-        isRunning = true;
         timer = new Timer(DELAY, this);
         timer.start();
+        resetSnakeStatus();
+    }
+
+    private void resetSnakeStatus() {
+        isRunning = true;
+        bodyLength = 6;
+        applesEaten = 0;
     }
 
     public void paintComponent(Graphics g) {
@@ -54,7 +60,7 @@ public class GamePanel extends JPanel implements ActionListener {
         draw(g);
     }
 
-    public void draw(Graphics g) {
+    private void draw(Graphics g) {
 
         if(isRunning) {
             // drawGrids(g);
@@ -107,12 +113,12 @@ public class GamePanel extends JPanel implements ActionListener {
         }
     }
 
-    public void spawnApple() {
+    private void spawnApple() {
         appleX = random.nextInt(SCREEN_WIDTH/UNIT_SIZE)*UNIT_SIZE;
         appleY = random.nextInt(SCREEN_HEIGHT/UNIT_SIZE)*UNIT_SIZE;
     }
 
-    public void move() {
+    private void move() {
         for(int i = bodyLength; i>0; i--) {
             x[i] = x[i-1];
             y[i] = y[i-1];
@@ -126,7 +132,7 @@ public class GamePanel extends JPanel implements ActionListener {
         }
     }
 
-    public void checkApple() {
+    private void checkApple() {
         if((x[0] == appleX) && (y[0] == appleY)) {
             bodyLength++;
             applesEaten++;
@@ -134,7 +140,7 @@ public class GamePanel extends JPanel implements ActionListener {
         }
     }
 
-    public void checkCollisions() {
+    private void checkCollisions() {
         // check if head collides with body
         for(int i=bodyLength; i>0; i--) {
             if ((x[0] == x[i]) && (y[0] == y[i])) {
@@ -154,7 +160,7 @@ public class GamePanel extends JPanel implements ActionListener {
         }
     }
 
-    public void gameOver(Graphics g) {
+    private void gameOver(Graphics g) {
         g.setColor(Color.red);
         g.setFont(new Font("Ink Free", Font.BOLD, 75));
         FontMetrics metrics = getFontMetrics(g.getFont());
@@ -178,7 +184,7 @@ public class GamePanel extends JPanel implements ActionListener {
 
     }
 
-    public class MyKeyAdapter extends KeyAdapter {
+    private class MyKeyAdapter extends KeyAdapter {
         @Override
         public void keyPressed(KeyEvent e) {
             switch(e.getKeyCode()) {
