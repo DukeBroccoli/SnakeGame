@@ -22,8 +22,11 @@ public class GamePanel extends JPanel implements ActionListener {
     private static final int GAME_UNITS = (SCREEN_WIDTH*SCREEN_HEIGHT)/(UNIT_SIZE*UNIT_SIZE);
     private static final int DELAY = 75;
 
-    private final int[] x = new int[GAME_UNITS];    // x-coordinates of the snake body, x[0] is head
-    private final int[] y = new int[GAME_UNITS];    // y-coordinates of the snake body, y[0] is head
+    private static final int BUTTON_WIDTH = 150;
+    private static final int BUTTON_HEIGHT = 50;
+
+    private int[] x = new int[GAME_UNITS];    // x-coordinates of the snake body, x[0] is head
+    private int[] y = new int[GAME_UNITS];    // y-coordinates of the snake body, y[0] is head
     private int bodyLength = 6;
     private int applesEaten = 0;
     private int appleX;
@@ -46,13 +49,16 @@ public class GamePanel extends JPanel implements ActionListener {
         spawnApple();
         timer = new Timer(DELAY, this);
         timer.start();
-        resetSnakeStatus();
+        resetSnake();
     }
 
-    private void resetSnakeStatus() {
+    private void resetSnake() {
         isRunning = true;
         bodyLength = 6;
         applesEaten = 0;
+        x = new int[GAME_UNITS];
+        y = new int[GAME_UNITS];
+        direction = Direction.RIGHT;
     }
 
     public void paintComponent(Graphics g) {
@@ -61,14 +67,13 @@ public class GamePanel extends JPanel implements ActionListener {
     }
 
     private void draw(Graphics g) {
-
         if(isRunning) {
             // drawGrids(g);
 
             drawApple(g);
             drawSnake(g);
-
             drawScore(g);
+
         }else {
             gameOver(g);
         }
@@ -169,6 +174,30 @@ public class GamePanel extends JPanel implements ActionListener {
                     SCREEN_HEIGHT/2);
 
         drawScore(g);
+        addRestartButton();
+    }
+
+    private void addRestartButton() {
+        JButton button = new JButton("Start Again");
+        Font font = new Font("Ink Free", Font.BOLD, 20);
+        button.setFont(font);
+        button.setBounds((SCREEN_WIDTH - BUTTON_WIDTH)/2, SCREEN_HEIGHT*2/3, BUTTON_WIDTH, BUTTON_HEIGHT);
+        button.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if(e.getSource() == button) {
+                    restart();
+                }
+            }
+        });
+        this.add(button);
+    }
+
+    private void restart() {
+        this.removeAll();
+        revalidate();
+        startGame();
+        repaint();
     }
 
     @Override
