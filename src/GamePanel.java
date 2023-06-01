@@ -112,19 +112,13 @@ public class GamePanel extends JPanel implements ActionListener {
         Font font = new Font("Arial", Font.BOLD, 20);
         button.setFont(font);
         button.setBounds((SCREEN_WIDTH - BUTTON_WIDTH)/2, SCREEN_HEIGHT*2/3, BUTTON_WIDTH, BUTTON_HEIGHT);
-        button.addActionListener(e -> {
-            if(e.getSource() == button) {
-                restartGame();
-            }
-        });
+        button.addActionListener(e -> restartGame());
         this.add(button);
     }
 
     private void restartGame() {
         this.removeAll();
-        revalidate();
         startGame();
-        repaint();
     }
 
     @Override
