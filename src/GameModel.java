@@ -1,6 +1,3 @@
-import javax.swing.*;
-import java.util.Random;
-
 public final class GameModel {
 
     // Singleton
