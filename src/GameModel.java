@@ -25,6 +25,7 @@ public final class GameModel {
     void resetGame(int screenWidth, int screenHeight, int unitSize, int numberOfGameUnits) {
         fruit = factory.spawnNewFruit(FruitType.APPLE, screenWidth, screenHeight, unitSize);
         snake.resetSnake(numberOfGameUnits);
+        score = 0;
     }
 
     Fruit getFruit() {
