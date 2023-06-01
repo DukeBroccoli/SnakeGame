@@ -1,3 +1,5 @@
+package entity;
+
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.util.Arrays;
@@ -22,11 +24,11 @@ public class Snake {
 
     private Snake() {}
 
-    static Snake getInstance() {
+    public static Snake getInstance() {
         return snake;
     }
 
-    void resetSnake(int maxBodyLength) {
+    public void resetSnake(int maxBodyLength) {
         isRunning = true;
         bodyLength = 6;
         x = new int[maxBodyLength];
@@ -34,31 +36,31 @@ public class Snake {
         direction = Direction.RIGHT;
     }
 
-    SnakeKeyAdapter getAdapter() {
+    public SnakeKeyAdapter getAdapter() {
         return adapter;
     }
 
-    int[][] getSnakeBody() {
+    public int[][] getSnakeBody() {
         return new int[][]{Arrays.copyOf(x, bodyLength+1), Arrays.copyOf(y, bodyLength+1)};
     }
 
-    int getBodyLength() {
+    public int getBodyLength() {
         return bodyLength;
     }
 
-    void incrementBodyLength(int increment) {
+    public void incrementBodyLength(int increment) {
         bodyLength += increment;
     }
 
-    void stopRunning() {
+    public void stopRunning() {
         isRunning = false;
     }
 
-    boolean isRunning() {
+    public boolean isRunning() {
         return isRunning;
     }
 
-    void move(int unitSize) {
+    public void move(int unitSize) {
         for(int i = bodyLength; i>0; i--) {
             x[i] = x[i-1];
             y[i] = y[i-1];

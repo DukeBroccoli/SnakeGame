@@ -1,3 +1,8 @@
+import entity.Fruit;
+import entity.Snake;
+import utils.FruitFactory;
+import utils.FruitType;
+
 public final class GameModel {
 
     // Singleton
