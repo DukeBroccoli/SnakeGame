@@ -5,6 +5,8 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 
 public class GamePanel extends JPanel implements ActionListener {
 
@@ -26,6 +28,19 @@ public class GamePanel extends JPanel implements ActionListener {
         this.setBackground(Color.black);
         this.setFocusable(true);
         this.addKeyListener(gameModel.getSnake().getAdapter());
+        this.addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyPressed(KeyEvent e) {
+                if(e.getKeyCode() == KeyEvent.VK_SPACE) {
+                    if(!gameModel.isPaused()) {
+                        timer.stop();
+                    }else {
+                        timer.start();
+                    }
+                    gameModel.setPauseStatus();
+                }
+            }
+        });
         startGame();
     }
 

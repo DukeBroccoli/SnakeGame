@@ -14,7 +14,9 @@ public final class GameModel {
     private Fruit fruit;
     private final Snake snake = Snake.getInstance();
 
-    private int score = 0;
+    private int score;
+
+    private boolean isPaused;
 
     private GameModel() {}
 
@@ -26,6 +28,7 @@ public final class GameModel {
         fruit = factory.spawnNewFruit(FruitType.APPLE, screenWidth, screenHeight, unitSize);
         snake.resetSnake(numberOfGameUnits);
         score = 0;
+        isPaused = false;
     }
 
     Fruit getFruit() {
@@ -38,6 +41,14 @@ public final class GameModel {
 
     int getScore() {
         return score;
+    }
+
+    boolean isPaused() {
+        return isPaused;
+    }
+
+    void setPauseStatus() {
+        isPaused = !isPaused;
     }
 
     /**
